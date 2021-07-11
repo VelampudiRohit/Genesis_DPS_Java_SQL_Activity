@@ -1,32 +1,217 @@
-1->1. Display the name of movies, movie type is starts with Drama.
-Ans:-select * from movie where Movietype like 'Drama%';
+Basic
+======
 
-2. Display the movies acted by actor Ayushmann.
-Ans:-select * from movie where Heroname='Ayushmann';
+1.Display the name of movies, movie type is starts with Drama.
+
+1ans.
+
+mysql> SELECT * FROM movie WHERE Movietype LIKE "Drama%";
++---------+--------------------------+---------------+------------------+--------------+----------+--------+----------------+--------------+
+| Movieid | Moviename                | Heroname      | Heroine          | Releaseddate | Language | Length | Movietype      | Productionid |
++---------+--------------------------+---------------+------------------+--------------+----------+--------+----------------+--------------+
+|     131 | Padmavaat                | Shahid Kapoor | Deepika Padukone | 2018-01-25   | Hindi    |     21 | Drama Epic     |         1899 |
+|     136 | Badhaai Ho               | Ayushmann     | Neena            | 2018-10-18   | Hindi    |     14 | Drama Comedy   |         1854 |
+|     188 | Rangoon                  | Saif Ali Khan | Kangana          | 2017-02-24   | Hindi    |     15 | Drama          |         1899 |
+|     201 | Bahubali - The Beginning | Prabhas       | Tammanah         | 2015-07-10   | Telugu   |     21 | Drama Fantasy  |         9091 |
+|     206 | Maryada Ramanna          | Sunil         | Saloni           | 2010-07-23   | Telugu   |     19 | Drama          |         9091 |
+|     211 | Khaidi No. 150           | chiranjeevi   | Kajal            | 2017-01-11   | Telugu   |     20 | Drama Thriller |         8892 |
+|     224 | Rangasthalam             | Ram Charan    | Samatha          | 2018-03-30   | Telugu   |     17 | Drama Period   |         7682 |
+|     441 | The Villain              | Sudeep        | Amy              | 2018-10-18   | Kannada  |     16 | Drama          |         2341 |
++---------+--------------------------+---------------+------------------+--------------+----------+--------+----------------+--------------+
+8 rows in set (0.09 sec)
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+2.Display the movies acted by actor Ayushmann.
+
+2ans.
+
+mysql> SELECT * FROM movie WHERE Heroname="Ayushmann";
++---------+------------+-----------+--------------+--------------+----------+--------+----------------+--------------+
+| Movieid | Moviename  | Heroname  | Heroine      | Releaseddate | Language | Length | Movietype      | Productionid |
++---------+------------+-----------+--------------+--------------+----------+--------+----------------+--------------+
+|     136 | Badhaai Ho | Ayushmann | Neena        | 2018-10-18   | Hindi    |     14 | Drama Comedy   |         1854 |
+|     146 | Andhadhun  | Ayushmann | Radhika Apte | 2018-10-05   | Hindi    |     16 | Crime Thriller |         1899 |
++---------+------------+-----------+--------------+--------------+----------+--------+----------------+--------------+
+2 rows in set (0.00 sec)
+
+---------------------------------------------------------------------------------------------------------------------------------------------
 
 3.Display the count of movies, having length above 18.
-Ans:- select count(Length) from movie where length>18;
 
-4. Display the movie having minimum length.
-Ans:-  select Moviename , min(length) from movie;
+3ans.
 
-5. Display all the details of movie, the language that first name starts with ‘T’.
-Ans:- Select * from movie where language Like 'T%';
+mysql> SELECT COUNT(Length) AS Count FROM movie WHERE Length>18;
++-------+
+| Count |
++-------+
+|     6 |
++-------+
+1 row in set (0.00 sec)
 
-6. Display the movie name, hero name, heroine name whose having a maximum length.
-Ans:- select Moviename,Heroname ,Heroine  , max(length) from movie;
+-----------------------------------------------------------------------------------------------------------------------------------------------
 
-7. Display the movie name, hero name, heroine name the movie released after 15 march 2018.
-Ans:- select Moviename,Heroname ,Heroine from movie where Releasedate ='15/03/2018';
+4.Display the movie having minimum length.
 
-8. Display the count of thriller movies
-Ans:- select count(Movietype) from movie where Movietype='Thriller';
+4ans.
 
-9. Display the count of movies whose released before 15 march 2018.
-Ans:- select count(movieid) from movie where releasedate < '2018-3-15';
+mysql> SELECT Moviename FROM movie WHERE Length=(SELECT MIN(Length) FROM movie);
++---------------------+
+| Moviename           |
++---------------------+
+| Badhaai Ho          |
+| The House Next Door |
+| Gruham              |
+| Aval                |
++---------------------+
+4 rows in set (0.00 sec)
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+5.Display all the details of movie, the language that first name starts with ‘T’
+
+5ans.
+
+mysql> SELECT * FROM movie WHERE language LIKE 'T%';
++---------+--------------------------+-------------+----------+--------------+----------+--------+----------------+--------------+
+| Movieid | Moviename                | Heroname    | Heroine  | Releaseddate | Language | Length | Movietype      | Productionid |
++---------+--------------------------+-------------+----------+--------------+----------+--------+----------------+--------------+
+|     201 | Bahubali - The Beginning | Prabhas     | Tammanah | 2015-07-10   | Telugu   |     21 | Drama Fantasy  |         9091 |
+|     206 | Maryada Ramanna          | Sunil       | Saloni   | 2010-07-23   | Telugu   |     19 | Drama          |         9091 |
+|     211 | Khaidi No. 150           | chiranjeevi | Kajal    | 2017-01-11   | Telugu   |     20 | Drama Thriller |         8892 |
+|     224 | Rangasthalam             | Ram Charan  | Samatha  | 2018-03-30   | Telugu   |     17 | Drama Period   |         7682 |
+|     231 | Bharath Ane nenu         | Mahesh Babu | Kiara    | 2018-04-20   | Telugu   |     15 | Thriller       |         7882 |
+|     244 | Gruham                   | Siddharth   | Andrea   | 2018-11-17   | Telugu   |     14 | Horror         |         1899 |
+|     267 | Anaganaga O Dheerudu     | Siddharth   | Shruthi  | 2014-01-14   | Telugu   |     16 | Fantasy        |         9091 |
+|     501 | 2.0                      | Rajinikanth | Amy      | 2018-11-29   | Tamil    |     20 | Scientific     |         8892 |
+|     577 | Aval                     | Siddharth   | Andrea   | 2017-11-03   | Tamil    |     14 | Horror         |         1899 |
++---------+--------------------------+-------------+----------+--------------+----------+--------+----------------+--------------+
+9 rows in set (0.00 sec)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+6.Display the movie name, hero name, heroine name whose having maximum length.
+
+6ans.
+
+mysql> select Moviename,Heroname ,Heroine from movie WHERE Length=(SELECT MAX(Length) FROM movie);
++--------------------------+---------------+------------------+
+| Moviename                | Heroname      | Heroine          |
++--------------------------+---------------+------------------+
+| Padmavaat                | Shahid Kapoor | Deepika Padukone |
+| Bahubali - The Beginning | Prabhas       | Tammanah         |
+| K G F chapter 1          | Yash          | Srinithi Shetty  |
++--------------------------+---------------+------------------+
+3 rows in set (0.00 sec)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+7.Display the movie name, hero name, heroine name the movie released after 15 march 2018.
+
+7ans.
+
+mysql> SELECT Moviename,Heroname ,Heroine FROM movie WHERE Releaseddate > 20180315;
++------------------+-------------+-----------------+
+| Moviename        | Heroname    | Heroine         |
++------------------+-------------+-----------------+
+| Badhaai Ho       | Ayushmann   | Neena           |
+| Andhadhun        | Ayushmann   | Radhika Apte    |
+| Zero             | Shah ruck   | Katrina Kaif    |
+| Rangasthalam     | Ram Charan  | Samatha         |
+| Bharath Ane nenu | Mahesh Babu | Kiara           |
+| Gruham           | Siddharth   | Andrea          |
+| K G F chapter 1  | Yash        | Srinithi Shetty |
+| The Villain      | Sudeep      | Amy             |
+| 2.0              | Rajinikanth | Amy             |
++------------------+-------------+-----------------+
+9 rows in set (0.12 sec)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+8.Display the count of thriller movies.
+
+8ans.
+
+mysql> SELECT COUNT(Movietype) AS COUNT FROM movie WHERE Movietype='Thriller';
++-------+
+| COUNT |
++-------+
+|     1 |
++-------+
+1 row in set (0.00 sec)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+9.Display the count of movies whose released before 15 march 2018.
+
+9ans.
+
+mysql> SELECT Moviename,Heroname ,Heroine FROM movie WHERE Releaseddate < 20180315;
++--------------------------+---------------+------------------+
+| Moviename                | Heroname      | Heroine          |
++--------------------------+---------------+------------------+
+| Holiday                  | Akshay Kumar  | Sonakshi         |
+| Padmavaat                | Shahid Kapoor | Deepika Padukone |
+| Rangoon                  | Saif Ali Khan | Kangana          |
+| The House Next Door      | Siddharth     | Andrea           |
+| Bahubali - The Beginning | Prabhas       | Tammanah         |
+| Maryada Ramanna          | Sunil         | Saloni           |
+| Khaidi No. 150           | chiranjeevi   | Kajal            |
+| Anaganaga O Dheerudu     | Siddharth     | Shruthi          |
+| Aval                     | Siddharth     | Andrea           |
++--------------------------+---------------+------------------+
+9 rows in set (0.00 sec)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
 
 10. Display the release date of the movie name ‘Zero’.
-Ans:- select Releasedate from movie where Moviename='Zero';
+
+10ans.
+
+mysql> SELECT Releaseddate AS Released_Date FROM movie WHERE Moviename='Zero';
++---------------+
+| Released_Date |
++---------------+
+| 2018-12-21    |
++---------------+
+1 row in set (0.00 sec)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
 
 11.Display the actor name that acted with ‘Amy’.
-Ans:- select Heroname from movie where Heroine='Amy';
+
+11ans.
+
+mysql> SELECT Heroname FROM movie WHERE Heroine='Amy';
++-------------+
+| Heroname    |
++-------------+
+| Sudeep      |
+| Rajinikanth |
++-------------+
+2 rows in set (0.00 sec)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+12.Display the Count of maximum movies released in a month of October.
+
+12ans.
+
+mysql> SELECT COUNT(*) AS COUNT_MOVIE_OCTOBER FROM movie WHERE MONTH(Releaseddate)='10';
++---------------------+
+| COUNT_MOVIE_OCTOBER |
++---------------------+
+|                   3 |
++---------------------+
+1 row in set (0.00 sec)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+13.Display the movienames whose production id is same for different languages.
+
+13ans.
+
+
+
+============================================================================================================================================================================================================
+

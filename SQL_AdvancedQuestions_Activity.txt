@@ -1,0 +1,182 @@
+Advanced
+========
+
+1.
+Write the query to display productionid, production name with total number movies produced by each.
+
+1ans.
+
+mysql> SELECT productions.Productionid, Productionname, COUNT(Productionname) AS COUNT FROM movie INNER JOIN productions WHERE productions.Productionid=movie.Productionid GROUP BY movie.Productionid ORDER BY movie.Productionid;
++--------------+----------------------------+-------+
+| Productionid | Productionname             | COUNT |
++--------------+----------------------------+-------+
+|         1010 | Hari Om Entertainment      |     1 |
+|         1854 | Junglee Pictures           |     1 |
+|         1899 | Viacom18 Studios           |     6 |
+|         1988 | Red Chillies Entertainment |     1 |
+|         2341 | CRM                        |     1 |
+|         6773 | Hombale Flims              |     1 |
+|         7682 | Mythri Movie Makers        |     1 |
+|         7882 | DVV Entertainments         |     1 |
+|         8892 | Lyca Productions           |     2 |
+|         9091 | Arkamediaworks             |     3 |
++--------------+----------------------------+-------+
+10 rows in set (0.00 sec)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2.
+Write the query to display production name, owner name have produced more than 2 movies.
+
+2ans.
+
+mysql> SELECT productions.Productionname, Ownername FROM movie INNER JOIN productions WHERE productions.Productionid=movie.Productionid GROUP BY movie.Productionid HAVING COUNT(*)>2;
++------------------+------------------+
+| Productionname   | Ownername        |
++------------------+------------------+
+| Viacom18 Studios | Ajit Andhare     |
+| Arkamediaworks   | Shobu Yarlagadda |
++------------------+------------------+
+2 rows in set (0.00 sec)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3.
+Write the query to display production name, owner name have produced maximum movies
+
+3ans.
+
+mysql> SELECT productions.Productionname, Ownername FROM movie INNER JOIN productions WHERE productions.Productionid=movie.Productionid GROUP BY movie.Productionid HAVING COUNT(*)>0 ORDER BY COUNT(*) DESC LIMIT 1;
++------------------+--------------+
+| Productionname   | Ownername    |
++------------------+--------------+
+| Viacom18 Studios | Ajit Andhare |
++------------------+--------------+
+1 row in set (0.00 sec)
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.
+Write the query to display the moviename, heroname and productionname acted in the producer name= ’Subaskaran’.
+
+4ans.
+
+mysql> SELECT Moviename, Heroname, Productionname FROM movie INNER JOIN productions ON movie.Productionid=productions.Productionid WHERE Ownername = "Subaskaran";
++----------------+-------------+------------------+
+| Moviename      | Heroname    | Productionname   |
++----------------+-------------+------------------+
+| Khaidi No. 150 | chiranjeevi | Lyca Productions |
+| 2.0            | Rajinikanth | Lyca Productions |
++----------------+-------------+------------------+
+2 rows in set (0.00 sec)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+5. 
+Write the query to display the moviename, heroname whose productionid ends with 82.
+
+5ans.
+
+mysql> SELECT Moviename, Heroname FROM movie WHERE Productionid Like '%82';
++------------------+-------------+
+| Moviename        | Heroname    |
++------------------+-------------+
+| Rangasthalam     | Ram Charan  |
+| Bharath Ane nenu | Mahesh Babu |
++------------------+-------------+
+2 rows in set (0.00 sec)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+6.
+Write the query to display the productionname, ownername who has not produced the movie.
+
+6ans.
+
+mysql> SELECT Productionname, Ownername FROM movie RIGHT JOIN productions ON productions.Productionid=movie.Productionid WHERE Movieid IS NULL;
++----------------+-----------+
+| Productionname | Ownername |
++----------------+-----------+
+| STP            | Sree      |
++----------------+-----------+
+1 row in set (0.00 sec)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+7. 
+Write the query to display the productionname, ownername who has not produced the ‘hindi’ movie.
+
+7ans.
+
+mysql> SELECT Productionname, Ownername FROM movie INNER JOIN productions ON productions.Productionid=movie.Productionid WHERE Language!='Hindi' GROUP BY (Productionname);
++---------------------+------------------+
+| Productionname      | Ownername        |
++---------------------+------------------+
+| Arkamediaworks      | Shobu Yarlagadda |
+| Lyca Productions    | Subaskaran       |
+| Mythri Movie Makers | Naveen Yerneni   |
+| DVV Entertainments  | DVV Danayya      |
+| Viacom18 Studios    | Ajit Andhare     |
+| Hombale Flims       | Vijay            |
+| CRM                 | Manohar          |
++---------------------+------------------+
+7 rows in set (0.00 sec)
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+8.
+Write the query name to display the heroinename who acted in the different productions but not in same production id.
+
+8ans.
+
+mysql> SELECT Heroine FROM movie GROUP BY Heroine HAVING COUNT(distinct movie.Productionid)>1;
++---------+
+| Heroine |
++---------+
+| Amy     |
++---------+
+1 row in set (0.00 sec)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+9.
+Write the query to display the heroname who acted in maximum languages.
+
+9ans.
+
+mysql> Select Heroname FROM movie GROUP BY Heroname ORDER BY COUNT(*) DESC LIMIT 1;
++-----------+
+| Heroname  |
++-----------+
+| Siddharth |
++-----------+
+1 row in set (0.00 sec)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+10.
+Write the query to display the production name, owner name who has produced movie for more languages.
+
+10ans.
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+11.
+Write the query to display the productionname, producername who has not produced any movie.
+
+11ans.
+mysql> SELECT Productionname, Ownername FROM movie RIGHT JOIN productions ON productions.Productionid=movie.Productionid WHERE Movieid IS NULL;
++----------------+-----------+
+| Productionname | Ownername |
++----------------+-----------+
+| STP            | Sree      |
++----------------+-----------+
+1 row in set (0.00 sec)
+
+============================================================================================================================================================================
+
+
+
