@@ -1,0 +1,60 @@
+Query_1. SQL statement that returns the employee detail whose id matches in a subquery:
+
+mysql> SELECT name, city, income FROM employees
+    -> WHERE id IN (SELECT id FROM employees);
++--------+--------+--------+
+| name   | city   | income |
++--------+--------+--------+
+| ram    | vizag  |  20000 |
+| raheem | indore |  25000 |
+| rahul  | delhi  |  30000 |
+| bunty  | bombay |  45000 |
++--------+--------+--------+
+4 rows in set (0.02 sec)
+
+----------------------------------------------------------------------------------------------------
+
+Query_2: SQL statement that returns the employee detail whose income is more than 25000 with the help of subquery:
+
+mysql> SELECT * FROM employees
+    ->    WHERE id IN (SELECT id FROM employees
+    ->          WHERE income > 25000);
++-----+-------+-----+--------+--------+
+| id  | name  | age | city   | income |
++-----+-------+-----+--------+--------+
+| 103 | rahul |  25 | delhi  |  30000 |
+| 104 | bunty |  27 | bombay |  45000 |
++-----+-------+-----+--------+--------+
+2 rows in set (0.00 sec)
+
+------------------------------------------------------------------------------------------------------
+
+Query_3:Query to find employee details with maximum income
+
+mysql> SELECT name, city, income FROM employees
+    ->    WHERE income = (SELECT MAX(income) FROM employees);
++-------+--------+--------+
+| name  | city   | income |
++-------+--------+--------+
+| bunty | bombay |  45000 |
++-------+--------+--------+
+1 row in set (0.02 sec)
+
+------------------------------------------------------------------------------------------------------
+
+Query_4:student detail who does not belong to Bombay
+
+mysql> SELECT Name,City FROM employees
+    -> WHERE City NOT IN(
+    -> SELECT City FROM employees WHERE City='bombay');
++--------+--------+
+| Name   | City   |
++--------+--------+
+| ram    | vizag  |
+| raheem | indore |
+| rahul  | delhi  |
++--------+--------+
+3 rows in set (0.16 sec)
+
+-------------------------------------------------------------------------------------------------------
+
